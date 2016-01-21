@@ -16,24 +16,25 @@
  *******************************************************************************/
 package net.famzangl.minecraft.minebot.ai.commands;
 
-import java.io.File;
-
 import net.famzangl.minecraft.minebot.ai.AIHelper;
 import net.famzangl.minecraft.minebot.ai.command.AICommand;
 import net.famzangl.minecraft.minebot.ai.command.AICommandInvocation;
 import net.famzangl.minecraft.minebot.ai.command.AICommandParameter;
 import net.famzangl.minecraft.minebot.ai.command.ParameterType;
+import net.famzangl.minecraft.minebot.ai.command.SafeStrategyRule;
+import net.famzangl.minecraft.minebot.ai.path.GoToPathfinder;
 import net.famzangl.minecraft.minebot.ai.strategy.AIStrategy;
-import net.famzangl.minecraft.minebot.ai.strategy.RunFileStrategy;
+import net.famzangl.minecraft.minebot.ai.strategy.PathFinderStrategy;
+import net.minecraft.util.BlockPos;
 
-@AICommand(helpText = "Run build commands from a file.", name = "minebuild")
-public class CommandLoad {
-
-	@AICommandInvocation()
-	public static AIStrategy run(
+@AICommand(name = "minebot", helpText = "Use the pathfinder to get to a given location.")
+public class CommandPathfind {
+	@AICommandInvocation(safeRule = SafeStrategyRule.DEFEND)
+	public static AIStrategy pathfind(
 			AIHelper helper,
-			@AICommandParameter(type = ParameterType.FIXED, fixedName = "load", description = "") String nameArg,
-			@AICommandParameter(type = ParameterType.FILE, relativeToSettingsFile = "build", description = "") File file) {
-		return new RunFileStrategy(file);
+			@AICommandParameter(type = ParameterType.FIXED, description = "", fixedName = "pathfind") String nameArg,
+			@AICommandParameter(type = ParameterType.POSITION, description = "Position to walk to") BlockPos position) {
+		return new PathFinderStrategy(new GoToPathfinder(position), "Go to "
+				+ position);
 	}
 }

@@ -16,36 +16,25 @@
  *******************************************************************************/
 package net.famzangl.minecraft.minebot.ai.path;
 
-import net.famzangl.minecraft.minebot.ai.command.BlockWithData;
-import net.famzangl.minecraft.minebot.ai.path.world.BlockFloatMap;
-import net.famzangl.minecraft.minebot.ai.path.world.BlockSet;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.BlockPos;
 
-public class MineSinglePathFinder extends MinePathfinder {
+public class GoToPathfinder extends WalkingPathfinder {
+	private final BlockPos position;
 
-	private final BlockSet blocks;
-
-	public MineSinglePathFinder(BlockSet blocks, EnumFacing preferedDirection,
-			int preferedLayer) {
-		super(preferedDirection, preferedLayer);
-		this.blocks = blocks;
+	public GoToPathfinder(BlockPos position) {
+		this.position = position;
 	}
-
+	
 	@Override
-	protected BlockFloatMap getFactorProvider() {
-		BlockFloatMap map = new BlockFloatMap();
-		for (BlockWithData block : blocks) {
-			map.set(block, 1);
+	protected boolean runSearch(BlockPos playerPosition) {
+		if (playerPosition.equals(position)) {
+			return true;
 		}
-		map.setDefault(0);
-		return map;
+		return super.runSearch(playerPosition);
 	}
 
 	@Override
-	protected BlockFloatMap getPointsProvider() {
-		BlockFloatMap map = new BlockFloatMap();
-		map.setDefault(0);
-		return map;
+	protected float rateDestination(int distance, int x, int y, int z) {
+		return position.getX() == x && position.getY() == y && position.getZ() == z ? 1 : -1;
 	}
-
 }

@@ -21,12 +21,12 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
+import net.minecraft.util.BlockPos;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
-
-import net.minecraft.util.BlockPos;
 
 /**
  * The basic path finding algorithm.
@@ -393,12 +393,12 @@ public class PathFinderField implements Comparator<Integer> {
 		res[0] = getNeighbour(currentNode, cx, cy + 1, cz);
 		res[1] = getNeighbour(currentNode, cx, cy - 1, cz);
 		res[2] = getNeighbour(currentNode, cx + 1, cy, cz);
-		res[3] = getNeighbour(currentNode, cx - 1, cy, cz);
-		res[4] = getNeighbour(currentNode, cx, cy, cz + 1);
-		res[5] = getNeighbour(currentNode, cx, cy, cz - 1);
-		res[6] = getNeighbour(currentNode, cx + 1, cy - 1, cz);
-		res[7] = getNeighbour(currentNode, cx - 1, cy - 1, cz);
-		res[8] = getNeighbour(currentNode, cx, cy - 1, cz + 1);
+		res[3] = getNeighbour(currentNode, cx + 1, cy - 1, cz);
+		res[4] = getNeighbour(currentNode, cx - 1, cy, cz);
+		res[5] = getNeighbour(currentNode, cx - 1, cy - 1, cz);
+		res[6] = getNeighbour(currentNode, cx, cy, cz + 1);
+		res[7] = getNeighbour(currentNode, cx, cy - 1, cz + 1);
+		res[8] = getNeighbour(currentNode, cx, cy, cz - 1);
 		res[9] = getNeighbour(currentNode, cx, cy - 1, cz - 1);
 		return res;
 	}
