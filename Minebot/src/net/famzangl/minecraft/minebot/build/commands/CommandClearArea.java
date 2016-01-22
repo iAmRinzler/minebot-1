@@ -71,11 +71,11 @@ public class CommandClearArea {
 			AIHelper helper,
 			@AICommandParameter(type = ParameterType.FIXED, fixedName = "clear", description = "") String nameArg,
 			@AICommandParameter(type = ParameterType.BLOCK_NAME, description = "restrict to block", optional = true) BlockWithDataOrDontcare block,
-			@AICommandParameter(type = ParameterType.ENUM, description = "clear mode", optional = true) ClearMode mode) {
+			@AICommandParameter(type = ParameterType.ENUM, description = "CM0: 1x6x1, CM1: 3x5x3, CM2: 5x5x5, CM3: 7x5x7", optional = true) ClearMode mode) {
 		BlockCuboid area =  getArea(helper);
 		if (area != null)  {
 			return new ClearAreaStrategy(new ClearAreaPathfinder(area, block,
-					mode == null ? ClearMode.VISIT_EVERY_POS : mode));
+					mode == null ? ClearMode.CM0 : mode));
 		} else {
 			return null;
 		}
